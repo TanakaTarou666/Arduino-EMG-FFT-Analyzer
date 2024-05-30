@@ -3,7 +3,6 @@
 arduinoFFT FFT;
 
 const uint16_t samples = 64; //This value MUST ALWAYS be a power of 2
-const uint16_t past_samples = 32; 
 const double samplingFrequency = 2000;
 const double signalFrequency = 1000;
 const uint8_t amplitude = 100;
@@ -25,19 +24,19 @@ void setup() {
 }
 
 void loop() {
-  for (uint16_t i = 0;i < past_samples; i++)
+  for (uint16_t i = 0;i < 56; i++)
   {
     vReal[i] = vReal[i+8];
     vImag[i] = 0.0;
     vReal_fft[i]= vReal[i];
   }
 
-  for (uint16_t i = past_samples;i < samples; i++)
+  for (uint16_t i = 56;i < samples; i++)
   {
     vReal[i] = analogRead(A1);
     vImag[i] = 0.0;
     vReal_fft[i]= vReal[i];
-    //delay(8);
+    delay(8);
   }
 
 
@@ -68,8 +67,6 @@ void PrintVectorPlot(double *vData, uint16_t bufferSize)
   }
   
   Serial.print(400);
-  Serial.print(" , ");
-  Serial.print(-50);
   Serial.print(" , ");
   Serial.println(a);
 }
